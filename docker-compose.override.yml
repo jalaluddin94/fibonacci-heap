@@ -3,8 +3,9 @@ services:
 
   proxy:
     ports:
-      - "80:80"
+      - "81:80"
       - "8090:8080"
+      - "8080:80"
     command:
       # Enable Docker in Traefik, so that it reads labels from Docker services
       - --providers.docker
@@ -74,9 +75,13 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./frontend-react
       args:
         FRONTEND_ENV: dev
+    volumes:
+      - ../fib-heap/frontend/npm:/root/.npm #CI Cache
+      - ./frontend-react:/app
+    command: bash -c "npm ci --cache .npm --prefer-offline; PORT=80 npm start"
     labels:
       - traefik.enable=true
       - traefik.constraint-label-stack=${TRAEFIK_TAG?Variable not set}
