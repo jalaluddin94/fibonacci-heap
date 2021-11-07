@@ -1,7 +1,6 @@
 import math
 
-
-class FibonacciHeap:
+class LibFibonacciHeap:
 
     # internal node class
     class Node:
