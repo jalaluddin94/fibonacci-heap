@@ -61,9 +61,9 @@ services:
     ports:
       - "5555:5555"
       
-  code-server:
-    ports:
-      - "7071:7071"
+  #code-server:
+  #  ports:
+  #    - "7071:7071"
 
   backend:
     ports:

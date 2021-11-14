@@ -137,16 +137,16 @@ services:
         - traefik.http.routers.${STACK_NAME?Variable not set}-flower-https.tls.certresolver=le
         - traefik.http.services.${STACK_NAME?Variable not set}-flower.loadbalancer.server.port=5555
   
-  code-server:
-    image: lscr.io/linuxserver/code-server
-    container_name: code-server
-    environment:
-      - PUID=1000
-      - PGID=1000
-    volumes:
-      - ../fib-heap/cs/config:/config
-    ports:
-      - "7071:7071"
+  #code-server:
+  #  image: lscr.io/linuxserver/code-server
+  #  container_name: code-server
+  #  environment:
+  #    - PUID=1000
+  #    - PGID=1000
+  #  volumes:
+  #    - ../fib-heap/cs/config:/config
+  #  ports:
+  #    - "7071:7071"
   
   backend:
     image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
