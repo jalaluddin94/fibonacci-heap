@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-
+import CustomCard from './components/Cards';
 import logo from './images/kaba.jpg';
 import './App.css';
 
