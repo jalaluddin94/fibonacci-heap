@@ -18,7 +18,7 @@ import CardHeader from "components/Card/CardHeader.js";
 // import CardFooter from "components/Card/CardFooter.js";
 import Parallax from "components/Parallax/Parallax.js";
 // sections for this page
-import HeaderLinks from "components/Header/HeaderLinks.js";
+// import HeaderLinks from "components/Header/HeaderLinks.js";
 // import SectionBasics from "./Sections/SectionBasics.js";
 // import SectionNavbars from "./Sections/SectionNavbars.js";
 // import SectionTabs from "./Sections/SectionTabs.js";
@@ -47,7 +47,7 @@ export default function Components(props) {
     <div>
       <Header
         brand="Fibonacci Heaps"
-        rightLinks={<HeaderLinks />}
+        // rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
         // changeColorOnScroll={{
