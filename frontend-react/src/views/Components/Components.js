@@ -1,8 +1,8 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
+// import classNames from "classnames";
 // react components for routing our app without refresh
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -11,9 +11,9 @@ import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-// import Button from "components/CustomButtons/Button.js";
+import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
-// import CardBody from "components/Card/CardBody.js";
+import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 // import CardFooter from "components/Card/CardFooter.js";
 import Parallax from "components/Parallax/Parallax.js";
@@ -71,7 +71,7 @@ export default function Components(props) {
         </div>
       </Parallax>
 
-      <div className={classNames(classes.main, classes.mainRaised)}>
+      <div>
         {/* <SectionBasics />
         <SectionNavbars />
         <SectionTabs />
@@ -97,8 +97,25 @@ export default function Components(props) {
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Login</h4>
+                    <h4>Menu</h4>
                   </CardHeader>
+                  <CardBody>
+                    <Link to={"/portion"} className={classes.link}>
+                      <Button color="primary" size="lg" simple>
+                        Daftar Porsi
+                      </Button>
+                    </Link>
+                    <Link to={"/departure"} className={classes.link}>
+                      <Button color="primary" size="lg" simple>
+                        Pemberangkatan
+                      </Button>
+                    </Link>
+                    <Link to={"/priority"} className={classes.link}>
+                      <Button color="primary" size="lg" simple>
+                        Prioritas
+                      </Button>
+                    </Link>
+                  </CardBody>
                 </form>
               </Card>
             </GridItem>
