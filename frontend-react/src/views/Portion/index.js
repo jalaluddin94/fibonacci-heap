@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { useSelector, useDispatch } from 'react-redux';
 import Tooltip from '@material-ui/core/Tooltip';
 // @material-ui/icons
 import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import People from "@material-ui/icons/People";
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 // core components
+import SDialog from "components/Dialog";
 import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -20,7 +23,10 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import Parallax from "components/Parallax/Parallax.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import PopupSuccess from "./PopupSuccess.js";
+// import LineChart from "components/Charts/Line.js";
 import { RequestPost } from "utilities";
+import { closeModal, openModal } from "redux/modules/Portion/actions/portion-actions";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 
@@ -28,6 +34,7 @@ const useStyles = makeStyles(styles);
 
 function Portion(props){
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
+    const dispatch = useDispatch();
     const [formPortion, setFormPortion] = React.useState([
       {
         "nama": "",
@@ -36,6 +43,18 @@ function Portion(props){
         "umur": 0
       }
     ]);
+    const openDialogSuccess = useSelector(state => state.getIn(["portionReducer", "openModalSuccess"]));
+    const [rawData, setRawData] = React.useState([]);
+    const [execTime, setExecTime] = React.useState({
+      labels: [],
+      datasets: [
+        {
+          label: "Execution time",
+          data: []
+        }
+      ]
+    });
+
     setTimeout(function () {
         setCardAnimation("");
     }, 700);
@@ -60,6 +79,12 @@ function Portion(props){
       setFormPortion(porsi);
     };
 
+    // const deletePortion = (index) => {
+    //   let porsi = [...formPortion];
+    //   porsi.splice(index, 1);
+    //   setFormPortion(porsi);
+    // };
+
     const validateForm = () => {
       let continueVal = true;
       let tempSentData = [];
@@ -80,10 +105,29 @@ function Portion(props){
       })
 
       if(continueVal){
-        console.log(JSON.stringify(tempSentData));
         RequestPost("fibonacci-heap", tempSentData)
           .then(res => {
-            console.log(JSON.stringify(res.data));
+            let edata = {
+              labels: [],
+              datasets: [
+                {
+                  label: "Execution time",
+                  data: []
+                }
+              ]
+            };
+            let elabels = [];
+            let etime = [];
+            res.data.forEach((data)=>{
+              elabels.push(data["nama"]);
+              etime.push(data["exec_time"]);
+            })
+            
+            edata["labels"] = elabels;
+            edata["datasets"][0]["data"] = etime;
+            setExecTime(edata);
+            setRawData(res.data);
+            dispatch(openModal());
           })
           .catch(er => {
             console.log("Error: ", er);
@@ -114,6 +158,16 @@ function Portion(props){
             </div>
         </Parallax>
         <div className={classes.container}>
+          <SDialog 
+            cancelText="Cancel"
+            content={<PopupSuccess dataAPI={rawData} dataChart={execTime} />}
+            onCancel={() => dispatch(closeModal())}
+            onOK={() => dispatch(closeModal())}
+            okText="OK"
+            open={openDialogSuccess}
+            title="Success"
+            type="success"
+          />
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card className={classes[cardAnimaton]}>

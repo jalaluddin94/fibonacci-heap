@@ -3,11 +3,11 @@ import { combineReducers } from 'redux-immutable';
 import { connectRouter } from 'connected-react-router/immutable';
 import history from 'utilities/history';
 
-// import agentsReducer from './modules/agents/reducers/agents-reducer';
+import portionReducer from './modules/Portion/reducers/portion-reducers';
 
 export default function createReducer(injectedReducers = {}){
     const appReducer = combineReducers({
-        // agentsReducer,
+        portionReducer,
         form,
         router: connectRouter(history),
         ...injectedReducers
