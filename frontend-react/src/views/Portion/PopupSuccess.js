@@ -6,7 +6,6 @@ import Divider from '@material-ui/core/Divider';
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from 'react-redux';
 
-import { closeModal } from "redux/modules/Portion/actions/portion-actions";
 import { closeDiagram, openDiagram } from "redux/modules/Portion/actions/portion-actions";
 import LineChart from "components/Charts/Line.js";
 import SDialog from "components/Dialog";
@@ -43,7 +42,6 @@ function PopupSuccess(props){
 
     const openExecDiagram = (e) => {
         e.preventDefault();
-        dispatch(closeModal());
         dispatch(openDiagram());
     };
 
