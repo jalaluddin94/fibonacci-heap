@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "chart.js": "2.9.4",
     "classnames": "2.3.1",
+    "connected-react-router": "^6.9.1",
     "history": "^4.10.1",
     "immutable": "^4.0.0-rc.12",
     "moment": "2.29.1",
