@@ -14,7 +14,7 @@ import Components from "views/Components/Components.js";
 import Portion from "views/Portion";
 // import LandingPage from "views/LandingPage/LandingPage.js";
 // import ProfilePage from "views/ProfilePage/ProfilePage.js";
-import LoginPage from "views/LoginPage/LoginPage.js";
+// import LoginPage from "views/LoginPage/LoginPage.js";
 
 const initialState = {};
 const store = configStore(initialState, history);
@@ -25,8 +25,8 @@ ReactDOM.render(
       <ConnectedRouter history={history}>
         <Switch>
           {/* <Route path="/landing-page" component={LandingPage} />
-          <Route path="/profile-page" component={ProfilePage} /> */}
-          <Route path="/login-page" component={LoginPage} /> 
+          <Route path="/profile-page" component={ProfilePage} />
+          <Route path="/login-page" component={LoginPage} />  */}
           <Route path="/portion" component={Portion} />
           <Route path="/" component={Components} />
         </Switch>

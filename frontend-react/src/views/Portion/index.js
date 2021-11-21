@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Tooltip from '@material-ui/core/Tooltip';
 // @material-ui/icons
 import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -18,6 +20,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import Parallax from "components/Parallax/Parallax.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import { RequestPost } from "utilities";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 
@@ -27,10 +30,10 @@ function Portion(props){
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
     const [formPortion, setFormPortion] = React.useState([
       {
-        "name": "",
-        "errName": false,
-        "errAge": false,
-        "age": 0
+        "nama": "",
+        "errNama": false,
+        "errUmur": false,
+        "umur": 0
       }
     ]);
     setTimeout(function () {
@@ -42,16 +45,12 @@ function Portion(props){
     const addPortion = () => {
       let porsi = [...formPortion];
       porsi.push({
-        "name": "",
-        "errName": false,
-        "errAge": false,
-        "age": 0
+        "nama": "",
+        "errNama": false,
+        "errUmur": false,
+        "umur": 0
       });
       setFormPortion(porsi);
-    };
-
-    const backPage = () => {
-      history.push("/");
     };
 
     const changePortion = (obj, index, change) => {
@@ -63,17 +62,32 @@ function Portion(props){
 
     const validateForm = () => {
       let continueVal = true;
+      let tempSentData = [];
       formPortion.forEach((p)=>{
-        if(p["name"] === null || p["name"] === ""){
-          p["errName"] = true;
+        if(p["nama"] === null || p["nama"] === ""){
+          console.log("Error di nama!");
+          p["errNama"] = true;
           continueVal = false;
-        }else if(p["age"] === null || p["age"] === ""){
-          p["errAge"] = true;
+        }else if(p["umur"] === null || p["umur"] === ""){
+          console.log("Error di umur!");
+          p["errUmur"] = true;
           continueVal = false
         }
+        tempSentData.push({
+          "nama": p["nama"],
+          "umur": p["umur"]
+        });
       })
+
       if(continueVal){
-        console.log("berhasil!");
+        console.log(JSON.stringify(tempSentData));
+        RequestPost("fibonacci-heap", tempSentData)
+          .then(res => {
+            console.log(JSON.stringify(res.data));
+          })
+          .catch(er => {
+            console.log("Error: ", er);
+          })
       }
     };
 
@@ -113,9 +127,10 @@ function Portion(props){
                         <div key={"div-form-" + i}>
                           <CardBody>
                             <CustomInput
+                              error={thePortion["errNama"]}
                               labelText="Full Name..."
                               id="fullname"
-                              onChange={e => changePortion("name", i, e.target.value)}
+                              onChange={e => changePortion("nama", i, e.target.value)}
                               formControlProps={{
                                 fullWidth: true,
                               }}
@@ -127,14 +142,15 @@ function Portion(props){
                                   </InputAdornment>
                                 ),
                               }}
-                              value={thePortion["name"]}
+                              value={thePortion["nama"]}
                             />
                           </CardBody>
                           <CardBody>
                             <CustomInput
+                              error={thePortion["errUmur"]}
                               labelText="Age..."
-                              id="age"
-                              onChange={e => changePortion("age", i, e.target.value)}
+                              id="umur"
+                              onChange={e => changePortion("umur", i, e.target.value)}
                               formControlProps={{
                                 fullWidth: true,
                               }}
@@ -146,7 +162,7 @@ function Portion(props){
                                   </InputAdornment>
                                 ),
                               }}
-                              value={thePortion["age"]}
+                              value={thePortion["umur"]}
                             />
                           </CardBody>
                         </div>
@@ -156,16 +172,20 @@ function Portion(props){
                   <CardBody>
                     <GridContainer justify="flex-end">
                       <GridItem xs={3}>
-                        <Button color="facebook" simple onClick={addPortion}>
-                          <AddIcon />
-                        </Button>
+                        <Tooltip title="Add more people...">
+                          <Button color="facebook" simple onClick={addPortion}>
+                            <AddIcon />
+                          </Button>
+                        </Tooltip>
                       </GridItem>
                     </GridContainer>
                   </CardBody>
                   <CardBody>
                     <GridContainer>
                       <GridItem xs={3}>
-                        <Button color="primary" onClick={backPage} round><ArrowBackIcon /></Button>
+                        <Link to="/">
+                          <Button color="primary" round><ArrowBackIcon /></Button>
+                        </Link>
                       </GridItem>
                       <GridItem xs={4}></GridItem>
                       <GridItem xs={3}>

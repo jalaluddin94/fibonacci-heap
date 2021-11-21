@@ -25,6 +25,7 @@ export default function CustomInput(props) {
     white,
     inputRootCustomClasses,
     success,
+    onChange
   } = props;
 
   const labelClasses = classNames({
@@ -71,6 +72,7 @@ export default function CustomInput(props) {
           disabled: classes.disabled,
           underline: underlineClasses,
         }}
+        onChange={onChange}
         id={id}
         {...inputProps}
       />
@@ -79,6 +81,7 @@ export default function CustomInput(props) {
 }
 
 CustomInput.propTypes = {
+  onChange: PropTypes.func,
   labelText: PropTypes.node,
   labelProps: PropTypes.object,
   id: PropTypes.string,
