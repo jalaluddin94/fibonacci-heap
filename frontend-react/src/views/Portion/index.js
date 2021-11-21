@@ -1,17 +1,15 @@
 import React from "react";
-// nodejs library that concatenates classes
-// react components for routing our app without refresh
-import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import InputAdornment from "@material-ui/core/InputAdornment";
 // @material-ui/icons
 import People from "@material-ui/icons/People";
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 // core components
 import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
@@ -22,7 +20,7 @@ import styles from "assets/jss/material-kit-react/views/components.js";
 
 const useStyles = makeStyles(styles);
 
-export default function Portion(props){
+function Portion(props){
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
     setTimeout(function () {
         setCardAnimation("");
@@ -57,7 +55,7 @@ export default function Portion(props){
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Menu</h4>
+                    <h4>Hajj Portion</h4>
                   </CardHeader>
                   <CardBody>
                     <CustomInput
@@ -76,6 +74,23 @@ export default function Portion(props){
                       }}
                     />
                   </CardBody>
+                  <CardBody>
+                    <CustomInput
+                      labelText="Age..."
+                      id="age"
+                      formControlProps={{
+                        fullWidth: true,
+                      }}
+                      inputProps={{
+                        type: "text",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <PermContactCalendarIcon className={classes.inputIconsColor} />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </CardBody>
                 </form>
               </Card>
             </GridItem>
@@ -85,3 +100,5 @@ export default function Portion(props){
     </div>
   );
 }
+
+export default Portion;
