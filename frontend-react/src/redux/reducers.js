@@ -3,10 +3,12 @@ import { combineReducers } from 'redux-immutable';
 import { connectRouter } from 'connected-react-router/immutable';
 import history from 'utilities/history';
 
+import departureReducer from './modules/Departure/reducers/departure-reducers';
 import portionReducer from './modules/Portion/reducers/portion-reducers';
 
 export default function createReducer(injectedReducers = {}){
     const appReducer = combineReducers({
+        departureReducer,
         portionReducer,
         form,
         router: connectRouter(history),
