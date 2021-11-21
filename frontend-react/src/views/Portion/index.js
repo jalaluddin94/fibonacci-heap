@@ -26,7 +26,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import PopupSuccess from "./PopupSuccess.js";
 // import LineChart from "components/Charts/Line.js";
 import { RequestPost } from "utilities";
-import { closeModal, openModal } from "redux/modules/Portion/actions/portion-actions";
+import { addDataChart, closeModal, openModal } from "redux/modules/Portion/actions/portion-actions";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 
@@ -45,15 +45,6 @@ function Portion(props){
     ]);
     const openDialogSuccess = useSelector(state => state.getIn(["portionReducer", "openModalSuccess"]));
     const [rawData, setRawData] = React.useState([]);
-    const [execTime, setExecTime] = React.useState({
-      labels: [],
-      datasets: [
-        {
-          label: "Execution time",
-          data: []
-        }
-      ]
-    });
 
     setTimeout(function () {
         setCardAnimation("");
@@ -111,7 +102,7 @@ function Portion(props){
               labels: [],
               datasets: [
                 {
-                  label: "Execution time",
+                  label: "Execution time (s)",
                   data: []
                 }
               ]
@@ -125,7 +116,7 @@ function Portion(props){
             
             edata["labels"] = elabels;
             edata["datasets"][0]["data"] = etime;
-            setExecTime(edata);
+            dispatch(addDataChart(edata));
             setRawData(res.data);
             dispatch(openModal());
           })
@@ -160,7 +151,7 @@ function Portion(props){
         <div className={classes.container}>
           <SDialog 
             cancelText="Cancel"
-            content={<PopupSuccess dataAPI={rawData} dataChart={execTime} />}
+            content={<PopupSuccess dataAPI={rawData} />}
             onCancel={() => dispatch(closeModal())}
             onOK={() => dispatch(closeModal())}
             okText="OK"

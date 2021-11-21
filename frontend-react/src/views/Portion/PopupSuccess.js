@@ -35,12 +35,14 @@ const options = {
 
 function PopupSuccess(props){
     const { 
-        dataAPI,
-        dataChart 
+        dataAPI
     } = props;
     const dispatch = useDispatch();
+    const dataChart = useSelector(state => state.getIn(["portionReducer", "dataChart"]));
     const openDialogDiagram = useSelector(state => state.getIn(["portionReducer", "openDiagram"]));
-    const openExecDiagram = () => {
+
+    const openExecDiagram = (e) => {
+        e.preventDefault();
         dispatch(closeModal());
         dispatch(openDiagram());
     };
@@ -54,7 +56,7 @@ function PopupSuccess(props){
                 onOK={() => dispatch(closeDiagram())}
                 okText="OK"
                 open={openDialogDiagram}
-                title="Success"
+                title="Execution Time"
                 type="success"
             />
             {
@@ -77,7 +79,7 @@ function PopupSuccess(props){
             <CardBody>
                 <Button
                     color="transparent"
-                    onClick={() => openExecDiagram}
+                    onClick={openExecDiagram}
                 >
                     View execution time
                 </Button>
@@ -89,6 +91,5 @@ function PopupSuccess(props){
 export default PopupSuccess
 
 PopupSuccess.propTypes = {
-    dataAPI: PropTypes.array,
-    dataChart: PropTypes.object
+    dataAPI: PropTypes.array
 };

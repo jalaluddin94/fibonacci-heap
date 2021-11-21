@@ -1,5 +1,12 @@
 import * as types from "./actionTypes";
 
+export function addDataChart(theData){
+    return {
+        type: types.ADD_DATA_CHART_PORTION,
+        payload: theData
+    }
+}
+
 export function openModal(){
     return {
         type: types.OPEN_MODAL_SUCCESS_PORTION,

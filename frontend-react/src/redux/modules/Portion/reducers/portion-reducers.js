@@ -3,6 +3,15 @@ import { fromJS } from 'immutable';
 
 //reducer
 const initialState = {
+    dataChart: {
+        labels: [],
+        datasets: [
+          {
+            label: "Execution time (s)",
+            data: []
+          }
+        ]
+    },
     openModalSuccess: false,
     openDiagram: false,
 }
@@ -11,6 +20,10 @@ const initialImmutableState = fromJS(initialState);
 
 export default function portionReducer(state = initialImmutableState, action = {}) {
     switch (action.type) {
+        case types.ADD_DATA_CHART_PORTION:
+            return state.withMutations((mutableState) => {
+                mutableState.set('dataChart', action.payload);
+            });
         case types.OPEN_MODAL_SUCCESS_PORTION:
             return state.withMutations((mutableState) => {
                 mutableState.set('openModalSuccess', action.payload);
