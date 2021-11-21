@@ -3,7 +3,7 @@ import { routerMiddleware } from 'connected-react-router';
 import { fromJS } from 'immutable';
 import createSagaMiddleware from 'redux-saga';
 
-// import { rootReducer } from './reducers';
+import createReducer from './reducers';
 import rootSagas from './rootsaga';
 
 function configStore(initialState = {}, history){
