@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 // core components
 import Header from "components/Header/Header.js";
@@ -25,6 +26,7 @@ import { openModal } from "redux/modules/Departure/actions/departure-actions.js"
 import { addDataChart } from "redux/modules/Portion/actions/portion-actions.js";
 import { RequestPost } from "utilities";
 import SDialog from "components/Dialog";
+import Queue from "views/Queue";
 // sections for this page
 // import HeaderLinks from "components/Header/HeaderLinks.js";
 // import SectionBasics from "./Sections/SectionBasics.js";
@@ -58,6 +60,7 @@ export default function Components(props) {
   const dispatch = useDispatch();
   const openModalDeparture = useSelector(state => state.getIn(["departureReducer", "openModalDeparture"]));
   const [openModalPriority, setOpenModalPriority] = React.useState(false);
+  const [openModalQueue, setOpenModalQueue] = React.useState(false);
   const { ...rest } = props;
 
   const doDeparture = (e) => {
@@ -71,9 +74,10 @@ export default function Components(props) {
           dataPpl["exec_time"] = res.data;
           dataChrt["labels"].splice(0, 1);
           dataChrt["datasets"][0]["data"].splice(0, 1);
+          dataChrt["no_urut"].splice(0,1);
 
-          console.log(JSON.stringify(dataPpl));
-          console.log(JSON.stringify(dataChrt));
+          // console.log(JSON.stringify(dataPpl));
+          // console.log(JSON.stringify(dataChrt));
           setDepartPpl(dataPpl);
           dispatch(addDataChart(dataChrt));
           dispatch(openModal(true));
@@ -120,7 +124,7 @@ export default function Components(props) {
           onOK={() => dispatch(openModal(false))}
           okText="OK"
           open={openModalDeparture}
-          title="Success"
+          title="Pemberangkatan Jamaah"
           type={departPpl["nama"] === "" ? "error" : "success"}
         />
         <SDialog 
@@ -130,7 +134,17 @@ export default function Components(props) {
           onOK={() => setOpenModalPriority(false)}
           okText="OK"
           open={openModalPriority}
-          title="Success"
+          title="Info"
+          type={"info"}
+        />
+        <SDialog 
+          cancelText="Cancel"
+          content={<Queue />}
+          onCancel={() => setOpenModalQueue(false)}
+          onOK={() => setOpenModalQueue(false)}
+          okText="OK"
+          open={openModalQueue}
+          title="Antrian Jamaah"
           type={"info"}
         />
         {/* <SectionBasics />
@@ -174,6 +188,10 @@ export default function Components(props) {
                     <Button color="primary" size="lg" onClick={() => setOpenModalPriority(true)} simple>
                       <PriorityHighIcon />
                       Prioritas
+                    </Button>
+                    <Button color="primary" size="lg" onClick={() => setOpenModalQueue(true)} simple>
+                      <NaturePeopleIcon />
+                      Daftar Antrian
                     </Button>
                   </CardBody>
                 </form>

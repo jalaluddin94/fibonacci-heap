@@ -10,7 +10,8 @@ const initialState = {
             label: "Execution time (s)",
             data: []
           }
-        ]
+        ],
+        no_urut: []
     },
     openModalSuccess: false,
     openDiagram: false,

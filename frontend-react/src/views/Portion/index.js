@@ -105,14 +105,17 @@ function Portion(props){
                   label: "Execution time (s)",
                   data: []
                 }
-              ]
+              ],
+              no_urut: []
             };
             let elabels = [];
             let etime = [];
+            let urutan = [];
             res.data.forEach((data)=>{
               elabels.push(data["nama"]);
               etime.push(data["exec_time"]);
-            })
+              urutan.push(data["no_urut"]);
+            });
             
             edata["labels"] = elabels;
             edata["datasets"][0]["data"] = etime;
